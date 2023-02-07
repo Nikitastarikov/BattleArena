@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using BattleArena.Enemy.StaticData;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace BattleArena.StaticData
 {
@@ -7,7 +9,7 @@ namespace BattleArena.StaticData
     {
         public string LevelKey;
 
-        //public List<EnemySpawnerData> EnemySpawners;
+        public List<EnemySpawnerData> EnemySpawners;
 
         public Vector3 InitialHeroPosition;
     }

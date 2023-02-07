@@ -4,12 +4,12 @@ using Zenject;
 
 public class HeroSpawnPoint : MonoBehaviour
 {
-    private GameFactory _gameFactory = default;
+    private IGameFactory _gameFactory = default;
 
     [Inject]
-    private void Constructor(GameFactory gameFactory) => 
+    private void Constructor(IGameFactory gameFactory) => 
         _gameFactory = gameFactory;
 
-    private async void Start() => 
+    private async void Start() =>
         await _gameFactory.CreateHeroAsync(transform.position);
 }

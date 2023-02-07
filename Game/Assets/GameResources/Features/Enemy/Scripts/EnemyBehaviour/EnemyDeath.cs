@@ -52,8 +52,13 @@ namespace BattleArena.Enemy
             onDeathHappened();
         }
 
-        private void SpawnDeathFX() => 
+        private void SpawnDeathFX()
+        {
+            if (!_deathFX)
+                return;
+
             Instantiate(_deathFX, transform.position, Quaternion.identity);
+        }
 
         private IEnumerator DestroyTimer()
         {

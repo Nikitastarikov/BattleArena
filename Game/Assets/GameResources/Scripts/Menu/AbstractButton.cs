@@ -12,10 +12,8 @@ public abstract class AbstractButton : MonoBehaviour
         if (ButtonMenu == null) Debug.LogError("Button netu");
     }
 
-    private void OnEnable()
-    {
+    private void OnEnable() => 
         ButtonMenu.onClick.AddListener(OnClicked);
-    }
 
     public abstract void OnClicked();
 }

@@ -14,7 +14,7 @@ namespace BattleArena.Infrastructure.Services
             _gameStateMachine = gameStateMachine;
             _gameStateMachine.Enter<BootstrapState>();
 
-            DontDestroyOnLoad(this);
+            //DontDestroyOnLoad(this);
         }
     }
 }

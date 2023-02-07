@@ -14,7 +14,7 @@ namespace BattleArena.Infrastructure.Services.Assets
         public void Initialize() =>
             Addressables.InitializeAsync();
 
-        public async Task<T> Load<T>(AssetReference assetReference) where T : class
+        public async Task<T> LoadAsync<T>(AssetReference assetReference) where T : class
         {
             if (_completeCache.TryGetValue(assetReference.AssetGUID, out AsyncOperationHandle completeHandle))
                 return completeHandle.Result as T;
@@ -24,7 +24,7 @@ namespace BattleArena.Infrastructure.Services.Assets
                 casheKey: assetReference.AssetGUID);
         }
 
-        public async Task<T> Load<T>(string address) where T : class
+        public async Task<T> LoadAsync<T>(string address) where T : class
         {
             if (_completeCache.TryGetValue(address, out AsyncOperationHandle completeHandle))
                 return completeHandle.Result as T;
@@ -34,10 +34,10 @@ namespace BattleArena.Infrastructure.Services.Assets
                 casheKey: address);
         }
 
-        public Task<GameObject> Instantiate(string address) =>
+        public Task<GameObject> InstantiateAsync(string address) =>
             Addressables.InstantiateAsync(address).Task;
 
-        public Task<GameObject> Instantiate(string address, Vector3 at) =>
+        public Task<GameObject> InstantiateAsync(string address, Vector3 at) =>
             Addressables.InstantiateAsync(address, at, Quaternion.identity).Task;
 
         public void CleanUp()
