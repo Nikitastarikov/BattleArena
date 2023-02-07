@@ -1,12 +1,11 @@
 ﻿using BattleArena.Infrastructure.Services;
 using BattleArena.StaticData;
-using System;
 using UnityEngine.SceneManagement;
 using UnityEngine;
 using BattleArena.Infrastructure.Services.StaticData;
 using BattleArena.Infrastructure.Services.GameFactory;
 using System.Threading.Tasks;
-using UnityEditorInternal;
+using BattleArena.Enemy.StaticData;
 
 namespace Infrastructure.States
 {
@@ -17,22 +16,19 @@ namespace Infrastructure.States
         private readonly IGameFactory _gameFactory;
         private readonly SceneLoader _sceneLoader;
 
-        public LoadLevelState(IGameStateMachine gameStateMachine, SceneLoader sceneLoader, 
-            IStaticDataService staticDataService)
+        public LoadLevelState(IGameStateMachine gameStateMachine, SceneLoader sceneLoader,
+            IStaticDataService staticDataService, IGameFactory gameFactory)
         {
             _gameStateMachine = gameStateMachine;
             _sceneLoader = sceneLoader;
             _staticDataService = staticDataService;
+            _gameFactory = gameFactory;
         }
 
-        public void Enter(string payload)
-        {
-            _sceneLoader.Load(payload, OnLoaded);
-        }
+        public void Enter(string payload) => 
+            _sceneLoader.LoadSceneAsync(payload, OnLoaded);
 
-        public void Exit()
-        {
-        }
+        public void Exit() { }
 
         private async void OnLoaded()
         {
@@ -45,15 +41,14 @@ namespace Infrastructure.States
         {
             LevelStaticData levelData = GetLevelStaticData();
 
-            InitSpawners(levelData);
-            InitLoot();
+            await InitEnemySpawnersAsync(levelData);
+            //InitLoot();
             GameObject hero = await InitHero(levelData);
             InitHud(hero);
         }
 
         private void InitHud(GameObject hero)
         {
-            throw new NotImplementedException();
         }
 
         private async Task<GameObject> InitHero(LevelStaticData levelData) =>
@@ -61,12 +56,14 @@ namespace Infrastructure.States
 
         private void InitLoot()
         {
-            throw new NotImplementedException();
         }
 
-        private void InitSpawners(LevelStaticData levelData)
+        private async Task InitEnemySpawnersAsync(LevelStaticData levelData)
         {
-            throw new NotImplementedException();
+            foreach (EnemySpawnerData spawnerData in levelData.EnemySpawners)
+            {
+                await _gameFactory.CreateEnemySpawner(spawnerData.Position, spawnerData.Id, spawnerData.MonsterTypeId);
+            }
         }
 
         private LevelStaticData GetLevelStaticData() =>

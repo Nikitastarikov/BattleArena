@@ -4,6 +4,8 @@ using Zenject;
 using BattleArena.Infrastructure.Services.PersistentData;
 using BattleArena.Infrastructure.Services;
 using BattleArena.Infrastructure.Services.SaveLoad;
+using BattleArena.Infrastructure.Services.StaticData;
+using BattleArena.Infrastructure.Services.GameFactory;
 
 namespace Infrastructure.States
 {
@@ -14,12 +16,12 @@ namespace Infrastructure.States
 
         [Inject]
         public GameStateMachine(SceneLoader sceneLoader, IPersistentProgressService persistentProgressService,
-            ISaveLoadService saveLoadService) 
+            ISaveLoadService saveLoadService, IStaticDataService staticDataService, IGameFactory gameFactory) 
         {
             _states = new Dictionary<Type, IExitableState>()
             {
-                [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader),
-                [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader),
+                [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader, staticDataService),
+                [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, staticDataService, gameFactory),
                 [typeof(LoadProgressState)] = new LoadProgressState(this, persistentProgressService, saveLoadService),
                 [typeof(GameLoopState)] = new GameLoopState()
             };

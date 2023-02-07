@@ -27,19 +27,19 @@ namespace BattleArena.Enemy
 
         private async void SpawnLoot()
         {
-            LootPiece loot = await _factory.CreateLoot();
-            loot.transform.position = transform.position;
-            Loot lootItem = GenerateLoot();
+            //LootPiece loot = await _factory.CreateLootAsync(at: transform.position);
+            //loot.transform.position = transform.position;
+            //Loot lootItem = GenerateLoot();
 
-            loot.Initialize(lootItem);
+            //loot.Initialize(lootItem);
         }
 
-        private Loot GenerateLoot()
-        {
-            return new Loot()
-            {
-                Value = Random.Range(_lootMin, _lootMax)
-            };
-        }
+        //private Loot GenerateLoot()
+        //{
+        //    return new Loot()
+        //    {
+        //        Value = Random.Range(_lootMin, _lootMax)
+        //    };
+        //}
     }
 }

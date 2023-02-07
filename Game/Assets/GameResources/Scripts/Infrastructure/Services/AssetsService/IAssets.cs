@@ -8,9 +8,9 @@ namespace BattleArena.Infrastructure.Services.Assets
     {
         void CleanUp();
         void Initialize();
-        Task<GameObject> Instantiate(string address);
-        Task<GameObject> Instantiate(string address, Vector3 at);
-        Task<T> Load<T>(AssetReference assetReference) where T : class;
-        Task<T> Load<T>(string address) where T : class;
+        Task<GameObject> InstantiateAsync(string address);
+        Task<GameObject> InstantiateAsync(string address, Vector3 at);
+        Task<T> LoadAsync<T>(AssetReference assetReference) where T : class;
+        Task<T> LoadAsync<T>(string address) where T : class;
     }
 }
